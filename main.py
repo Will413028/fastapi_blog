@@ -24,12 +24,12 @@ def hello():
     return {'message': 'Hello world'}
 
 
-@app.get('/blog/all')
+@app.get('/blog/all', tags=['blog'])
 def get_all_blog(page = 1, page_size: Optional[int] = None):
     return {'message': f'All {page_size} blogs on page {page}'}
 
 
-@app.get('/blog/{id}/comments/{comment_id}')
+@app.get('/blog/{id}/comments/{comment_id}', tags=['comments'])
 def get_comment(id:int, comment_id: int, valid: bool = True, username: Optional[str] = None):
     return {'message': f'blog_id {id},  comment_id {comment_id}, valid {valid}, username {username}   '}
 
