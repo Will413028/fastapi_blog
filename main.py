@@ -24,7 +24,12 @@ def hello():
     return {'message': 'Hello world'}
 
 
-@app.get('/blog/all', tags=['blog'], summary="Retrieve all blogs", description="This api call simuates fetching all blogs")
+@app.get('/blog/all',
+    tags=['blog'],
+    summary="Retrieve all blogs",
+    description="This api call simuates fetching all blogs",
+    response_description="The list of available blogs"
+    )
 def get_all_blog(page = 1, page_size: Optional[int] = None):
     return {'message': f'All {page_size} blogs on page {page}'}
 
