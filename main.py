@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, status, Response
 from typing import Optional
 from enum import Enum
 
@@ -34,6 +34,13 @@ def get_comment(id:int, comment_id: int, valid: bool = True, username: Optional[
     return {'message': f'blog_id {id},  comment_id {comment_id}, valid {valid}, username {username}   '}
 
 
-@app.get('/blog/{id}')
-def get_blog(id:int):
-    return {'message': f'Blog with id {id}'}
+@app.get('/blog/{id}', status_code=status.HTTP_200_OK)
+def get_blog(id:int, response: Response):
+    if id > 5:
+        response.status_code = status.HTTP_404_NOT_FOUND
+        return {'message': f'Blog {id} not found'}
+    else :
+        response.status_code = status.HTTP_200_OK
+        return {'message': f'Blog with id {id}'}
+
+
