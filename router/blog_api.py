@@ -1,5 +1,5 @@
 from fastapi import APIRouter, status, Response, Query, Body
-from typing import Optional
+from typing import Optional, List
 from enum import Enum
 from pydantic import BaseModel
 
@@ -83,7 +83,7 @@ def create_blog(blog: BlogModel, id: int,
     regex='^[a-z\s]*$'
     ),
     # v: Optional[list[str]] = Query(None)
-    v: Optional[list[str]] = Query(['1', '2', '3'])
+    v: Optional[List[str]] = Query(['1', '2', '3'])
 
     ):
     blog.title
