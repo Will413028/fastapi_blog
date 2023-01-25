@@ -81,7 +81,9 @@ def create_blog(blog: BlogModel, id: int,
     min_length=10,
     max_length=50,
     regex='^[a-z\s]*$'
-    )
+    ),
+    # v: Optional[list[str]] = Query(None)
+    v: Optional[list[str]] = Query(['1', '2', '3'])
 
     ):
     blog.title
@@ -89,5 +91,6 @@ def create_blog(blog: BlogModel, id: int,
         'id': id,
         'data': blog,
         'comment_id': comment_id,
-        'content': content
+        'content': content,
+        'v': v
         }
