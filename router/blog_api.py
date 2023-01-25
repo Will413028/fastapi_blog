@@ -1,12 +1,19 @@
-from fastapi import APIRouter, status, Response
+from fastapi import APIRouter, status, Response, Query
 from typing import Optional
 from enum import Enum
+from pydantic import BaseModel
+
 
 class BlogType(str, Enum):
     short= 'short'
     story= 'story'
     howto= 'howto'
 
+
+class BlogModel(BaseModel):
+    title: str
+    content: str
+    published: Optional[bool]
 
 router = APIRouter(
     prefix='/blog', 
@@ -50,3 +57,27 @@ def get_blog(id:int, response: Response):
 def get_blog_type(type: BlogType):
     return {'message': f'Blog type id {type}'}
 
+
+@router.post('/new/{id}')
+def create_blog(blog: BlogModel, id: int, version: int = 1 ):
+    blog.title
+    return {
+        'id': id,
+        'data': blog,
+        'version': version
+        }
+
+@router.post('/new/{id}/comment')
+def create_blog(blog: BlogModel, id: int, 
+    comment_id: int = Query(None,
+    title='id of the comment',
+    description='description of the comment',
+    deprecated=True
+    ) 
+    ):
+    blog.title
+    return {
+        'id': id,
+        'data': blog,
+        'comment_id': comment_id
+        }
