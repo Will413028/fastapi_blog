@@ -1,4 +1,4 @@
-from fastapi import APIRouter, status, Response, Query
+from fastapi import APIRouter, status, Response, Query, Body
 from typing import Optional
 from enum import Enum
 from pydantic import BaseModel
@@ -73,11 +73,17 @@ def create_blog(blog: BlogModel, id: int,
     title='id of the comment',
     description='description of the comment',
     deprecated=True
-    ) 
+    ),
+    # default value
+    # content: str = Body('content')
+    # reauired value
+    content: str = Body(...)
+
     ):
     blog.title
     return {
         'id': id,
         'data': blog,
-        'comment_id': comment_id
+        'comment_id': comment_id,
+        'content': content
         }
