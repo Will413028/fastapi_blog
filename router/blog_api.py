@@ -1,5 +1,5 @@
 from fastapi import APIRouter, status, Response, Query, Body, Path
-from typing import Optional, List
+from typing import Optional, List, Dict
 from enum import Enum
 from pydantic import BaseModel
 
@@ -9,11 +9,16 @@ class BlogType(str, Enum):
     story= 'story'
     howto= 'howto'
 
+class Image(BaseModel):
+    url: str
 
 class BlogModel(BaseModel):
     title: str
     content: str
     published: Optional[bool]
+    tags: List[str] = []
+    metadata: Dict[str, str] = {'key': 'value'}
+    image: Optional[Image] = None
 
 router = APIRouter(
     prefix='/blog', 
@@ -60,7 +65,7 @@ def get_blog_type(type: BlogType):
 
 @router.post('/new/{id}')
 def create_blog(blog: BlogModel, id: int, version: int = 1 ):
-    blog.title
+
     return {
         'id': id,
         'data': blog,
