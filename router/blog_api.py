@@ -1,4 +1,4 @@
-from fastapi import APIRouter, status, Response, Query, Body
+from fastapi import APIRouter, status, Response, Query, Body, Path
 from typing import Optional, List
 from enum import Enum
 from pydantic import BaseModel
@@ -67,10 +67,10 @@ def create_blog(blog: BlogModel, id: int, version: int = 1 ):
         'version': version
         }
 
-@router.post('/new/{id}/comment')
-def create_blog(blog: BlogModel, id: int, 
-    comment_id: int = Query(None,
-    title='id of the comment',
+@router.post('/new/{id}/comment/{comment_id}')
+def create_comment(blog: BlogModel, id: int, 
+    comment_title: int = Query(None,
+    title='Title of the comment',
     description='description of the comment',
     deprecated=True
     ),
@@ -83,13 +83,14 @@ def create_blog(blog: BlogModel, id: int,
     regex='^[a-z\s]*$'
     ),
     # v: Optional[list[str]] = Query(None)
-    v: Optional[List[str]] = Query(['1', '2', '3'])
-
+    v: Optional[List[str]] = Query(['1', '2', '3']),
+    comment_id: int = Path(None, gt=1, le=10)
     ):
     blog.title
     return {
         'id': id,
         'data': blog,
+        'comment_title': comment_title,
         'comment_id': comment_id,
         'content': content,
         'v': v
