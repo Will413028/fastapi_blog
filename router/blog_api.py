@@ -77,7 +77,11 @@ def create_blog(blog: BlogModel, id: int,
     # default value
     # content: str = Body('content')
     # reauired value
-    content: str = Body(...)
+    content: str = Body(...,
+    min_length=10,
+    max_length=50,
+    regex='^[a-z\s]*$'
+    )
 
     ):
     blog.title
