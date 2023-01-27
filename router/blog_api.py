@@ -1,4 +1,4 @@
-from fastapi import APIRouter, status, Response, Query, Body, Path
+from fastapi import APIRouter, status, Response, Query, Body, Path, Depends
 from typing import Optional, List, Dict
 from enum import Enum
 from pydantic import BaseModel
@@ -20,6 +20,10 @@ class BlogModel(BaseModel):
     metadata: Dict[str, str] = {'key': 'value'}
     image: Optional[Image] = None
 
+def required_functionality():
+    return {'message': 'Learning FastAPI is important'}
+
+
 router = APIRouter(
     prefix='/blog', 
     tags=['blog']
@@ -31,8 +35,8 @@ router = APIRouter(
     description="This api call simuates fetching all blogs",
     response_description="The list of available blogs"
     )
-def get_all_blog(page = 1, page_size: Optional[int] = None):
-    return {'message': f'All {page_size} blogs on page {page}'}
+def get_all_blog(page = 1, page_size: Optional[int] = None, req_parameter: dict = Depends(required_functionality)):
+    return {'message': f'All {page_size} blogs on page {page}', 'req': req_parameter}
 
 
 @router.get('/{id}/comments/{comment_id}', tags=['comments'])
