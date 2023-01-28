@@ -1,12 +1,12 @@
 from fastapi import FastAPI
-from router import blog_api
-from router import user_api
-from router import article_api
+from router import blog_api, user_api, article_api
+from auth import authentication
 from db.database import engine
 from db import models
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+app.include_router(authentication.router)
 app.include_router(user_api.router)
 app.include_router(blog_api.router)
 app.include_router(article_api.router)
