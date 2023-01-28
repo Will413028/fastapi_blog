@@ -1,6 +1,6 @@
 from typing import List
 from schemas import ArticleBase, ArticleDisplay, UserBase
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Form
 from sqlalchemy.orm import Session
 from db.database import get_db_session
 from db import article
@@ -21,3 +21,10 @@ def get_article(id: int, db: Session = Depends(get_db_session)):
   return {
     'data': article.get_article(db, id)
   }
+
+
+products = ['watch', 'camera', 'video']
+@router.post('/new')
+def create_test(name: str = Form(...)):
+  products.append(name)
+  return products
