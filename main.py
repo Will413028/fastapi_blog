@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from router import blog_api, user_api, article_api
+from router import blog_api, user_api, article_api, file_api
 from auth import authentication
 from db.database import engine
 from db import models
@@ -10,6 +10,7 @@ app.include_router(authentication.router)
 app.include_router(user_api.router)
 app.include_router(blog_api.router)
 app.include_router(article_api.router)
+app.include_router(file_api.router)
 
 @app.get('/hello')
 def hello():
